@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Websites</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <h1> Cools Rooms</h1>
+   <div id="rooms-container">
+
+   </div>
+</body>
+
+<script>
+    let roomsContainer =document.getElementById('rooms-container');
+
+    let getRooms = async () => {
+        let response = await fetch("http://127.0.0.1:8000/api/rooms/");
+        let rooms = await response.json();
+        console.log('rooms', rooms);
+
+        for (let i=0; rooms.length > i ; i++) {
+            let room = rooms[i]
+            
+            let row= `<div>
+                       <h3>${room.name}</h3>
+                      </div>`
+            
+            roomsContainer.innerHTML += row;
+        }
+    }
+    getRooms();
+</script>
+</html>
