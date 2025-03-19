@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
+from dotenv import load_dotenv
 from pathlib import Path
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,13 +91,26 @@ WSGI_APPLICATION = 'carechat.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),  # DB_NAME from .env file
+        'USER': os.getenv('DB_USER'),  # DB_USER from .env file
+        'PASSWORD': os.getenv('DB_PASSWORD'),  # DB_PASSWORD from .env file
+        'HOST': os.getenv('DB_HOST'),  # DB_HOST from .env file
+        'PORT': os.getenv('DB_PORT'),  # DB_PORT from .env file
+        'OPTIONS': {
+            'sslmode': 'require',  # Use SSL for security ---
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
